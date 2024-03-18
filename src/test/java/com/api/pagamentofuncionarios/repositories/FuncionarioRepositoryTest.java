@@ -22,7 +22,7 @@ import org.mockito.MockitoAnnotations;
 
 class FuncionarioRepositoryTest {
 
-      @Mock
+    @Mock
     FuncionarioRepository funcionarioRepository;
 
     @InjectMocks
@@ -30,7 +30,7 @@ class FuncionarioRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

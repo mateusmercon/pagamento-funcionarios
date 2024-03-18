@@ -11,7 +11,6 @@ package com.api.pagamentofuncionarios.controllers;
 import com.api.pagamentofuncionarios.dtos.FuncionarioDto;
 import com.api.pagamentofuncionarios.models.FuncionarioModel;
 import com.api.pagamentofuncionarios.services.FuncionarioService;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +37,7 @@ class FuncionarioControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

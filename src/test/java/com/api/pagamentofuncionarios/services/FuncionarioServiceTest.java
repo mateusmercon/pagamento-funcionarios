@@ -35,7 +35,7 @@ class FuncionarioServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -124,7 +124,7 @@ class FuncionarioServiceTest {
         String expectedOutput = "CPF: 123.456.789-00\nImposto de Renda: R$ 80.36";
         Assertions.assertEquals(expectedOutput, resultado);
     }
-    
+
     @Test
     @DisplayName("Deve informar que um funcionário com salário não tributável é isento do imposto de renda")
     void calculaImpostoDeRendaIsentoTest() {
