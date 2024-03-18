@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Mateus Merçon
  */
 @RestController
-@RequestMapping("/api/pagamentofuncionarios")
+@RequestMapping("/api/funcionarios")
 public class FuncionarioController {
 
     @Autowired
@@ -52,7 +53,7 @@ public class FuncionarioController {
     }
 
     @Operation(description = "Busca um funcionário por id")
-    @GetMapping("/buscaporid/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Object> buscaFuncionarioPorId(@PathVariable(value = "id") UUID id) {
         Optional<FuncionarioModel> funcionarioOptional = funcionarioService.findById(id);
 
@@ -64,12 +65,24 @@ public class FuncionarioController {
     }
 
     @Operation(description = "Busca um funcionário por CPF")
-    @GetMapping("/buscaporcpf/{cpf}")
+    @GetMapping("/cpf/{cpf}")
     public ResponseEntity<Object> buscaFuncionarioPorCPF(@PathVariable(value = "cpf") String cpf) {
         Optional<FuncionarioModel> funcionarioOptional = funcionarioService.findByCpf(cpf);
 
         if (funcionarioOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(funcionarioOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado!");
+        }
+    }
+
+    @Operation(description = "Atualiza o salário de um funcionário por CPF")
+    @PutMapping("/{cpf}")
+    public ResponseEntity<Object> atualizaSalario(@PathVariable(value = "cpf") String cpf) {
+        Optional<FuncionarioModel> funcionarioOptional = funcionarioService.findByCpf(cpf);
+        if (funcionarioOptional.isPresent()) {
+            FuncionarioModel funcionarioModel = funcionarioOptional.get();
+            return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.atualizaSalario(funcionarioModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado!");
         }
