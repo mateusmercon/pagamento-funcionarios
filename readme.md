@@ -39,4 +39,4 @@ Projeto desenvolvido para o teste técnico da Unisoma.
 
 4. **Acessar a Aplicação**
 
-Após iniciar a aplicação ela estará disponível no localhost:8080. Você pode acessá-la com o Swagger no seu navegador em [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+- Após iniciar a aplicação ela estará disponível no localhost:8080. Você pode acessá-la com o Swagger no seu navegador em [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
