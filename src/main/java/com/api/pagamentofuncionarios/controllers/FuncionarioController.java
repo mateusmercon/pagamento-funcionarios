@@ -76,13 +76,26 @@ public class FuncionarioController {
         }
     }
 
-    @Operation(description = "Atualiza o salário de um funcionário por CPF")
+    @Operation(description = "Atualiza o salário de um funcionário pelo CPF")
     @PutMapping("/{cpf}")
     public ResponseEntity<Object> atualizaSalario(@PathVariable(value = "cpf") String cpf) {
         Optional<FuncionarioModel> funcionarioOptional = funcionarioService.findByCpf(cpf);
         if (funcionarioOptional.isPresent()) {
             FuncionarioModel funcionarioModel = funcionarioOptional.get();
             return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.atualizaSalario(funcionarioModel));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado!");
+        }
+    }
+    
+    @Operation(description = "Calcula o imposto de renda de um funcionário pelo CPF")
+    @GetMapping("/impostoderenda/{cpf}")
+    public ResponseEntity<Object> calculaImpostoDeRenda(@PathVariable(value = "cpf") String cpf) {
+        Optional<FuncionarioModel> funcionarioOptional = funcionarioService.findByCpf(cpf);
+
+        if (funcionarioOptional.isPresent()) {
+            FuncionarioModel funcionarioModel = funcionarioOptional.get();
+            return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.calculaImpostoDeRenda(funcionarioModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado!");
         }

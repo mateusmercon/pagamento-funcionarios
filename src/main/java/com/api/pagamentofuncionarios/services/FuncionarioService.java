@@ -7,7 +7,6 @@ package com.api.pagamentofuncionarios.services;
 import com.api.pagamentofuncionarios.models.FuncionarioModel;
 import com.api.pagamentofuncionarios.repositories.FuncionarioRepository;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -71,6 +70,29 @@ public class FuncionarioService {
         return ("CPF: " + funcionarioModel.getCpf()
                 + "\nNovo salário: " + String.format("%.2f", novoSalario)
                 + "\nReajuste ganho: " + String.format("%.2f", reajuste)
-                + "\nEm percentual: " + String.format("%.2f", reajustePorcentagem) + "%");
+                + "\nEm percentual: " + String.format("%.0f", reajustePorcentagem) + "%");
+    }
+
+    public Object calculaImpostoDeRenda(FuncionarioModel funcionarioModel) {
+        BigDecimal salario = funcionarioModel.getSalario();
+
+        if (salario.compareTo(BigDecimal.ZERO) >= 0 && salario.compareTo(BigDecimal.valueOf(2000)) <= 0) {
+            String impostoDeRenda = "Isento";
+            return ("CPF: " + funcionarioModel.getCpf()
+                    + "\n" + impostoDeRenda);
+        }
+
+        BigDecimal impostoDeRenda;
+
+        if (salario.compareTo(BigDecimal.valueOf(2000)) > 0 && salario.compareTo(BigDecimal.valueOf(3000)) <= 0) {
+            impostoDeRenda = salario.subtract(BigDecimal.valueOf(2000)).multiply(BigDecimal.valueOf(0.08));
+        } else if (salario.compareTo(BigDecimal.valueOf(3000)) > 0 && salario.compareTo(BigDecimal.valueOf(4500)) <= 0) {
+            impostoDeRenda = salario.subtract(BigDecimal.valueOf(3000)).multiply(BigDecimal.valueOf(0.18)).add(BigDecimal.valueOf(80));
+        } else {
+            impostoDeRenda = salario.subtract(BigDecimal.valueOf(4500)).multiply(BigDecimal.valueOf(0.28)).add(BigDecimal.valueOf(350));
+        }
+
+        return ("CPF: " + funcionarioModel.getCpf()
+                + "\nImposto de Renda: R$ " + String.format("%.2f", impostoDeRenda));
     }
 }
