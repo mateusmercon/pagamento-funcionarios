@@ -29,19 +29,19 @@ public class FuncionarioModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true, length = 14)
     private String cpf;
     
     @Column(nullable = false, length = 256)
     private String nome;
     
-    @Column(nullable = false)
+    @Column()
     private LocalDate dataDeNascimento;
     
-    @Column(nullable = false, length = 11)
+    @Column(length = 11)
     private String telefone;
     
-    @Column(nullable = false, length = 512)
+    @Column(length = 512)
     private String endereco;
     
     @Column(nullable = false)
@@ -61,6 +61,10 @@ public class FuncionarioModel implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+    
+    public void setCpfSemMascara(String cpf) {
+        this.cpf = cpf.replaceAll("[.-]", "");
     }
 
     public String getNome() {

@@ -76,7 +76,7 @@ class FuncionarioServiceTest {
     @Test
     @DisplayName("Deve encontrar um funcionário pelo CPF")
     void findByCpfFuncionarioTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         Mockito.when(funcionarioRepository.findByCpf(cpf)).thenReturn(Optional.of(funcionarioModel));
 
@@ -89,7 +89,7 @@ class FuncionarioServiceTest {
     @Test
     @DisplayName("Deve verificar se um funcionário existe pelo CPF")
     void existsByCpfFuncionarioTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         Mockito.when(funcionarioRepository.existsByCpf(cpf)).thenReturn(true);
 
         boolean exists = funcionarioService.existsByCpf(cpf);
@@ -102,13 +102,13 @@ class FuncionarioServiceTest {
     void atualizaSalarioTest() {
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         funcionarioModel.setSalario(BigDecimal.valueOf(500));
-        funcionarioModel.setCpf("12345678900");
+        funcionarioModel.setCpf("123.456.789-00");
 
         Mockito.when(funcionarioRepository.save(Mockito.any(FuncionarioModel.class))).thenReturn(funcionarioModel);
 
         Object resultado = funcionarioService.atualizaSalario(funcionarioModel);
 
-        String expectedOutput = "CPF: 12345678900\nNovo salário: 560.00\nReajuste ganho: 60.00\nEm percentual: 12%";
+        String expectedOutput = "CPF: 123.456.789-00\nNovo salário: 560.00\nReajuste ganho: 60.00\nEm percentual: 12%";
         Assertions.assertEquals(expectedOutput, resultado);
     }
 
@@ -117,11 +117,11 @@ class FuncionarioServiceTest {
     void calculaImpostoDeRendaTest() {
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         funcionarioModel.setSalario(BigDecimal.valueOf(3002));
-        funcionarioModel.setCpf("12345678900");
+        funcionarioModel.setCpf("123.456.789-00");
 
         Object resultado = funcionarioService.calculaImpostoDeRenda(funcionarioModel);
 
-        String expectedOutput = "CPF: 12345678900\nImposto de Renda: R$ 80.36";
+        String expectedOutput = "CPF: 123.456.789-00\nImposto de Renda: R$ 80.36";
         Assertions.assertEquals(expectedOutput, resultado);
     }
     
@@ -130,11 +130,11 @@ class FuncionarioServiceTest {
     void calculaImpostoDeRendaIsentoTest() {
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         funcionarioModel.setSalario(BigDecimal.valueOf(1500));
-        funcionarioModel.setCpf("12345678900");
+        funcionarioModel.setCpf("123.456.789-00");
 
         Object resultado = funcionarioService.calculaImpostoDeRenda(funcionarioModel);
 
-        String expectedOutput = "CPF: 12345678900\nIsento";
+        String expectedOutput = "CPF: 123.456.789-00\nIsento";
         Assertions.assertEquals(expectedOutput, resultado);
     }
 

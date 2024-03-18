@@ -36,7 +36,7 @@ class FuncionarioRepositoryTest {
     @Test
     @DisplayName("Deve verificar se um funcionário existe pelo CPF")
     void existsByCpfTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         Mockito.when(funcionarioRepository.existsByCpf(cpf)).thenReturn(true);
 
         boolean exists = funcionarioRepository.existsByCpf(cpf);
@@ -47,7 +47,7 @@ class FuncionarioRepositoryTest {
     @Test
     @DisplayName("Deve encontrar um funcionário pelo CPF")
     void findByCpfTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         funcionarioModel.setCpf(cpf);
 

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -17,21 +18,18 @@ import javax.validation.constraints.Size;
 public class FuncionarioDto {
 
     @NotBlank
-    @Size(max = 11)
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
     private String cpf;
 
     @NotBlank
     @Size(max = 256)
     private String nome;
 
-    @NotNull
     private LocalDate dataDeNascimento;
 
-    @NotBlank
     @Size(max = 11)
     private String telefone;
 
-    @NotBlank
     @Size(max = 512)
     private String endereco;
 
@@ -44,6 +42,10 @@ public class FuncionarioDto {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+    
+    public void setCpfSemMascara(String cpf) {
+        this.cpf = cpf.replaceAll("[.-]", "");
     }
 
     public String getNome() {

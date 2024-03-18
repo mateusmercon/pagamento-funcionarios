@@ -48,7 +48,7 @@ class FuncionarioControllerTest {
         Mockito.when(funcionarioService.save(Mockito.any(FuncionarioModel.class))).thenReturn(funcionarioModel);
 
         FuncionarioDto funcionarioDto = new FuncionarioDto();
-        funcionarioDto.setCpf("12345678900");
+        funcionarioDto.setCpf("123.456.789-00");
 
         ResponseEntity<Object> responseEntity = funcionarioController.cadastraFuncionario(funcionarioDto);
 
@@ -58,7 +58,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve retornar conflito ao tentar cadastrar um funcionário com CPF já existente")
     void cadastraFuncionarioCpfExistenteTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioDto funcionarioDto = new FuncionarioDto();
         funcionarioDto.setCpf(cpf);
 
@@ -111,7 +111,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve buscar um funcionário por CPF com sucesso")
     void buscaFuncionarioPorCPFTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.of(funcionarioModel));
 
@@ -124,7 +124,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve retornar not found ao buscar um funcionário por CPF que não existe")
     void buscaFuncionarioPorCPFNotFoundTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
 
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.empty());
 
@@ -137,7 +137,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve atualizar o salário de um funcionário com sucesso")
     void atualizaSalarioTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.of(funcionarioModel));
 
@@ -149,7 +149,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve retornar not found ao tentar atualizar o salário de um funcionário que não existe")
     void atualizaSalarioNotFoundTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
 
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.empty());
 
@@ -162,7 +162,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve calcular o imposto de renda de um funcionário com sucesso")
     void calculaImpostoDeRendaTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
         FuncionarioModel funcionarioModel = new FuncionarioModel();
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.of(funcionarioModel));
 
@@ -174,7 +174,7 @@ class FuncionarioControllerTest {
     @Test
     @DisplayName("Deve retornar not found ao tentar calcular o imposto de renda de um funcionário que não existe")
     void calculaImpostoDeRendaNotFoundTest() {
-        String cpf = "12345678900";
+        String cpf = "123.456.789-00";
 
         Mockito.when(funcionarioService.findByCpf(cpf)).thenReturn(Optional.empty());
 
