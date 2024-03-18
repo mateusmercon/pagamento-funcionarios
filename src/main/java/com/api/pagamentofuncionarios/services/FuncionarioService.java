@@ -8,6 +8,7 @@ import com.api.pagamentofuncionarios.models.FuncionarioModel;
 import com.api.pagamentofuncionarios.repositories.FuncionarioRepository;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import javax.transaction.Transactional;
@@ -66,6 +67,8 @@ public class FuncionarioService {
 
         funcionarioModel.setSalario(novoSalario);
         save(funcionarioModel);
+        
+        Locale.setDefault(Locale.US);
 
         return ("CPF: " + funcionarioModel.getCpf()
                 + "\nNovo salário: " + String.format("%.2f", novoSalario)
@@ -91,6 +94,8 @@ public class FuncionarioService {
         } else {
             impostoDeRenda = salario.subtract(BigDecimal.valueOf(4500)).multiply(BigDecimal.valueOf(0.28)).add(BigDecimal.valueOf(350));
         }
+        
+        Locale.setDefault(Locale.US);
 
         return ("CPF: " + funcionarioModel.getCpf()
                 + "\nImposto de Renda: R$ " + String.format("%.2f", impostoDeRenda));
