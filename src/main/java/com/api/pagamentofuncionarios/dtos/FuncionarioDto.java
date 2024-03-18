@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 /**
@@ -17,23 +18,23 @@ import javax.validation.constraints.Size;
  */
 public class FuncionarioDto {
 
-    @NotBlank
-    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
+    @NotBlank(message = "O CPF não pode estar em vazio")
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido, use o formato XXX.XXX.XXX-XX")
     private String cpf;
 
-    @NotBlank
-    @Size(max = 256)
+    @Size(max = 256, message = "O nome deve ter no máximo 256 caracteres")
     private String nome;
 
     private LocalDate dataDeNascimento;
 
-    @Size(max = 11)
+    @Size(max = 11, message = "O telefone deve ter no máximo 11 dígitos")
     private String telefone;
 
-    @Size(max = 512)
+    @Size(max = 512, message = "O endereço deve ter no máximo 512 caracteres")
     private String endereco;
 
-    @NotNull
+    @NotNull(message = "O salário não pode estar em vazio")
+    @PositiveOrZero(message = "O salário não pode ser negativo")
     private BigDecimal salario;
 
     public String getCpf() {
@@ -42,10 +43,6 @@ public class FuncionarioDto {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-    
-    public void setCpfSemMascara(String cpf) {
-        this.cpf = cpf.replaceAll("[.-]", "");
     }
 
     public String getNome() {

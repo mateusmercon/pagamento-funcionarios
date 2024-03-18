@@ -32,7 +32,7 @@ public class FuncionarioModel implements Serializable {
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
     
-    @Column(nullable = false, length = 256)
+    @Column(length = 256)
     private String nome;
     
     @Column()
@@ -61,10 +61,6 @@ public class FuncionarioModel implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-    
-    public void setCpfSemMascara(String cpf) {
-        this.cpf = cpf.replaceAll("[.-]", "");
     }
 
     public String getNome() {

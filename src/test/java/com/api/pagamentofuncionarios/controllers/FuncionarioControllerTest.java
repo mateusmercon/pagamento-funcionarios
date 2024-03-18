@@ -11,6 +11,7 @@ package com.api.pagamentofuncionarios.controllers;
 import com.api.pagamentofuncionarios.dtos.FuncionarioDto;
 import com.api.pagamentofuncionarios.models.FuncionarioModel;
 import com.api.pagamentofuncionarios.services.FuncionarioService;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +55,7 @@ class FuncionarioControllerTest {
 
         Assertions.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
-    
+
     @Test
     @DisplayName("Deve retornar conflito ao tentar cadastrar um funcionário com CPF já existente")
     void cadastraFuncionarioCpfExistenteTest() {
@@ -76,7 +77,7 @@ class FuncionarioControllerTest {
         List<FuncionarioModel> funcionarioList = new ArrayList<>();
         Mockito.when(funcionarioService.findAll()).thenReturn(funcionarioList);
 
-        ResponseEntity<List<FuncionarioModel>> responseEntity = funcionarioController.buscaFuncionarios();
+        ResponseEntity<Object> responseEntity = funcionarioController.buscaFuncionarios();
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertEquals(funcionarioList, responseEntity.getBody());
@@ -94,7 +95,7 @@ class FuncionarioControllerTest {
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertEquals(funcionarioModel, responseEntity.getBody());
     }
-    
+
     @Test
     @DisplayName("Deve retornar not found ao buscar um funcionário por ID que não existe")
     void buscaFuncionarioPorIdNotFoundTest() {
@@ -120,7 +121,7 @@ class FuncionarioControllerTest {
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertEquals(funcionarioModel, responseEntity.getBody());
     }
-    
+
     @Test
     @DisplayName("Deve retornar not found ao buscar um funcionário por CPF que não existe")
     void buscaFuncionarioPorCPFNotFoundTest() {
@@ -135,6 +136,15 @@ class FuncionarioControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar bad request ao tentar buscar funcionário com CPF em formato inválido")
+    void buscaFuncionarioPorCPFFormatoInvalidoTest() {
+        String cpf = "12345678900";
+        ResponseEntity<Object> response = funcionarioController.buscaFuncionarioPorCPF(cpf);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Assertions.assertEquals("CPF inválido, use o formato XXX.XXX.XXX-XX", response.getBody());
+    }
+
+    @Test
     @DisplayName("Deve atualizar o salário de um funcionário com sucesso")
     void atualizaSalarioTest() {
         String cpf = "123.456.789-00";
@@ -145,7 +155,7 @@ class FuncionarioControllerTest {
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-    
+
     @Test
     @DisplayName("Deve retornar not found ao tentar atualizar o salário de um funcionário que não existe")
     void atualizaSalarioNotFoundTest() {
@@ -160,6 +170,15 @@ class FuncionarioControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar bad request ao tentar atualizar salário com CPF em formato inválido")
+    void atualizaSalarioCPFInvalidoTest() {
+        String cpf = "12345678900";
+        ResponseEntity<Object> response = funcionarioController.atualizaSalario(cpf);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Assertions.assertEquals("CPF inválido, use o formato XXX.XXX.XXX-XX", response.getBody());
+    }
+
+    @Test
     @DisplayName("Deve calcular o imposto de renda de um funcionário com sucesso")
     void calculaImpostoDeRendaTest() {
         String cpf = "123.456.789-00";
@@ -170,7 +189,7 @@ class FuncionarioControllerTest {
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-    
+
     @Test
     @DisplayName("Deve retornar not found ao tentar calcular o imposto de renda de um funcionário que não existe")
     void calculaImpostoDeRendaNotFoundTest() {
@@ -182,5 +201,14 @@ class FuncionarioControllerTest {
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         Assertions.assertEquals("Funcionário não encontrado!", response.getBody());
+    }
+
+    @Test
+    @DisplayName("Deve retornar bad request ao tentar calcular imposto de renda com CPF em formato inválido")
+    void calculaImpostoDeRendaCPFInvalidoTest() {
+        String cpf = "12345678900";
+        ResponseEntity<Object> response = funcionarioController.calculaImpostoDeRenda(cpf);
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Assertions.assertEquals("CPF inválido, use o formato XXX.XXX.XXX-XX", response.getBody());
     }
 }
